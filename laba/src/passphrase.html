@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Change onetime phrase</title>
+</head>
+<body>
+<form id="passphrase-form">
+	<div>
+		<label>Enter passphrase</label>
+		<input type="password" id="phrase" autofocus>
+		<br>
+		<small>enter something to work with users data</small>
+	</div>
+	<button type="submit" align="center">Change</button>
+</form>
+</body>
+<script>
+const electron = require('electron');
+const {ipcRenderer} = electron;
+
+document.querySelector('#passphrase-form').addEventListener('submit', changePassPhrase);
+
+function changePassPhrase(e) {
+	e.preventDefault();
+	let passphrase = document.querySelector('#phrase').value;
+	if(passphrase == "") {
+		return;
+	}
+	ipcRenderer.send('passphrase:change', passphrase);
+}
+</script>
+</html>
